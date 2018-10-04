@@ -44,6 +44,25 @@ def de_discretize_action(descrete_action, low, high, num):
     return descrete_action / num * (high - low) + low
 
 
+def choose_action(action_probability):
+    rand = np.random.uniform()
+    sum = 0
+    for i in range(len(action_probability)):
+        prob = action_probability[i]
+        if sum <= rand < (prob + sum):
+            return i
+        else:
+            sum += prob
+    if sum == 1:
+        return len(action_probability) - 1
+
+
+def random_action(action_n):
+    interval = 1.0 / action_n
+    action_probability = [interval for i in range(action_n)]
+    idx = choose_action(action_probability)
+    return idx
+
 class RewardQueue:
     def __init__(self, max_size):
         self.last_total_rewards = []

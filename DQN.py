@@ -177,7 +177,8 @@ class DQN:
         if rand:
             # epsilon greedy
             if np.random.uniform() < self.epsilon:
-                idx = 0 if np.random.uniform() > 0.5 else 1
+                # idx = 0 if np.random.uniform() > 0.5 else 1
+                idx = random_action(self.action_n)
             # eval action
             else:
                 idx = np.argmax(
@@ -353,6 +354,7 @@ def train_structure(NAME='CartPole-v0',
             print('Finished leanring....')
             model.save_model(global_step)
             break
+    model.save_model(global_step)
     env.close()
     model.close()
 
@@ -400,12 +402,12 @@ def pendulum():
                     batch_size=256,
                     max_memory_size=1000,
                     learning_rate=0.0001,
-                    switch_freq=800,
+                    switch_freq=1600,
                     log_dir="D:\\NJU\\Games\\log\\Q_learning_in_cartpole",
                     max_record_reward_num=50,
-                    max_episode=2000,
+                    max_episode=4000,
                     save_model_freq=200,
-                    finish_reward=-500,
+                    finish_reward=-200,
                     reward_fn=reward_fun,
                     action_fn=action_fn)
 
